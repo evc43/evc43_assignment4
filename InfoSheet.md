@@ -5,17 +5,17 @@ every assignment. Also be sure to submit all materials
 following the procedures described in the assignment
 description.
 
-Name: ______________________________
+Name: _________Evan Chen_____________________
 
-Assignment #: ______________
+Assignment #: __4___________
 
 Source code (.java) file name(s):
 
-_________________________________________________________
+HashDS.java________________________________________________________
 
 _________________________________________________________
 
-Does your program compile without errors?: _____________
+Does your program compile without errors?: _____Yes___
 
 If not, what is/are the error(s)?:
 
@@ -25,7 +25,7 @@ _________________________________________________________
 
 _________________________________________________________
 
-Does your program run without errors?: _____________
+Does your program run without errors?: ________Yes_____
 
 If not, what is/are the error(s) and which parts of your
 program run correctly?:
