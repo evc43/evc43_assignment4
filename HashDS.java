@@ -177,10 +177,11 @@ public class HashDS<T> implements SequenceInterface<T> {
         StringBuilder result = new StringBuilder();
         Node<T> current = head;
         while (current != null) {
-            result.append(current.data).append(" ");
+            result.append(current.data);
             current = current.next;
         }
-        return result.toString().trim();
+        return result.toString();
     }
 }
+
 
