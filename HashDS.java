@@ -160,6 +160,19 @@ public class HashDS<T> implements SequenceInterface<T> {
     }
 
     @Override
+    public int getFrequencyOf(T item) {
+        int count = 0;
+        Node<T> current = head;
+        while (current != null) {
+            if (current.data.equals(item)) {
+                count++;
+            }
+            current = current.next;
+        }
+        return count;
+    }
+
+    @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         Node<T> current = head;
