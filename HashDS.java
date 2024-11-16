@@ -1,27 +1,3 @@
-// Define EmptySequenceException
-class EmptySequenceException extends RuntimeException {
-    public EmptySequenceException(String message) {
-        super(message);
-    }
-}
-
-// SequenceInterface Definition
-interface SequenceInterface<T> {
-    void append(T item);
-    void prefix(T item);
-    T itemAt(int index);
-    T first();
-    T last();
-    T deleteHead();
-    T deleteTail();
-    boolean isEmpty();
-    int size();
-    void clear();
-    int getFrequencyOf(T item);
-    boolean remove(T item);
-}
-
-// HashDS Implementation
 public class HashDS<T> implements SequenceInterface<T> {
     private Node<T> head;
     private Node<T> tail;
@@ -59,7 +35,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         }
     }
 
-    // Append method
+    // Method to add an item to the end of the list
     @Override
     public void append(T item) {
         Node<T> newNode = new Node<>(item);
@@ -73,7 +49,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         size++;
     }
 
-    // Prefix method
+    // Method to add an item to the front of the list
     @Override
     public void prefix(T item) {
         Node<T> newNode = new Node<>(item);
@@ -87,7 +63,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         size++;
     }
 
-    // ItemAt method
+    // Method to get the item at a specific index
     @Override
     public T itemAt(int index) {
         if (index < 0 || index >= size) {
@@ -101,7 +77,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         return current.data;
     }
 
-    // First method
+    // Method to get the first item
     @Override
     public T first() {
         if (head == null) {
@@ -110,7 +86,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         return head.data;
     }
 
-    // Last method
+    // Method to get the last item
     @Override
     public T last() {
         if (tail == null) {
@@ -119,7 +95,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         return tail.data;
     }
 
-    // DeleteHead method
+    // Method to delete the head item
     @Override
     public T deleteHead() {
         if (head == null) {
@@ -135,7 +111,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         return data;
     }
 
-    // DeleteTail method
+    // Method to delete the tail item
     @Override
     public T deleteTail() {
         if (tail == null) {
@@ -158,19 +134,19 @@ public class HashDS<T> implements SequenceInterface<T> {
         return data;
     }
 
-    // IsEmpty method
+    // Method to check if the list is empty
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
-    // Size method
+    // Method to get the size of the list
     @Override
     public int size() {
         return size;
     }
 
-    // Clear method
+    // Method to clear the list
     @Override
     public void clear() {
         head = null;
@@ -178,7 +154,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         size = 0;
     }
 
-    // GetFrequencyOf method
+    // Method to get frequency of an item
     @Override
     public int getFrequencyOf(T item) {
         int count = 0;
@@ -192,23 +168,25 @@ public class HashDS<T> implements SequenceInterface<T> {
         return count;
     }
 
-    // Remove method
+    // Method to remove an item from the list
     @Override
     public boolean remove(T item) {
         if (head == null) {
             return false;
         }
 
+        // If the head is the item to remove
         if (head.data.equals(item)) {
             deleteHead();
             return true;
         }
 
+        // Traverse to find the item
         Node<T> current = head;
         while (current.next != null) {
             if (current.next.data.equals(item)) {
                 current.next = current.next.next;
-                if (current.next == null) {
+                if (current.next == null) { // Update tail if needed
                     tail = current;
                 }
                 size--;
@@ -219,7 +197,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         return false;
     }
 
-    // ToString method
+    // Method to convert the list to a string
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -231,4 +209,3 @@ public class HashDS<T> implements SequenceInterface<T> {
         return result.toString();
     }
 }
-
