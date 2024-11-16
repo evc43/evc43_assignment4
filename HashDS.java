@@ -150,4 +150,49 @@ public class HashDS<T> implements SequenceInterface<T> {
         }
         return result.toString().trim();
     }
+
+    // Implement the getFrequencyOf method
+    public int getFrequencyOf(T item) {
+        int frequency = 0;
+        Node<T> current = head;
+        while (current != null) {
+            if (current.data.equals(item)) {
+                frequency++;
+            }
+            current = current.next;
+        }
+        return frequency;
+    }
+
+    // Implement the remove method
+    @Override
+    public void remove(T item) {
+        if (head == null) {
+            return;
+        }
+
+        // If the item to be removed is the head
+        if (head.data.equals(item)) {
+            head = head.next;
+            if (head == null) {
+                tail = null;
+            }
+            size--;
+            return;
+        }
+
+        // Traverse the list to find and remove the item
+        Node<T> current = head;
+        while (current.next != null && !current.next.data.equals(item)) {
+            current = current.next;
+        }
+
+        if (current.next != null) {
+            current.next = current.next.next;
+            if (current.next == null) {
+                tail = current;
+            }
+            size--;
+        }
+    }
 }
