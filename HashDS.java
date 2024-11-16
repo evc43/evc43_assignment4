@@ -1,3 +1,4 @@
+// HashDS class implementing SequenceInterface
 public class HashDS<T> implements SequenceInterface<T> {
     private Node<T> head;
     private Node<T> tail;
@@ -13,14 +14,24 @@ public class HashDS<T> implements SequenceInterface<T> {
         }
     }
 
-    // Constructor
+    // Default Constructor
     public HashDS() {
         this.head = null;
         this.tail = null;
         this.size = 0;
     }
 
-    // Method to add an item to the end of the list
+    // Copy Constructor
+    public HashDS(HashDS<T> other) {
+        this();
+        Node<T> current = other.head;
+        while (current != null) {
+            this.append(current.data);
+            current = current.next;
+        }
+    }
+
+    // Append item to the end
     @Override
     public void append(T item) {
         Node<T> newNode = new Node<>(item);
@@ -34,7 +45,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         size++;
     }
 
-    // Method to add an item to the front of the list
+    // Add item to the front
     @Override
     public void prefix(T item) {
         Node<T> newNode = new Node<>(item);
@@ -48,13 +59,12 @@ public class HashDS<T> implements SequenceInterface<T> {
         size++;
     }
 
-    // Method to get the item at a specific index
+    // Get item at index
     @Override
     public T itemAt(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds: " + index);
         }
-
         Node<T> current = head;
         for (int i = 0; i < index; i++) {
             current = current.next;
@@ -62,7 +72,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         return current.data;
     }
 
-    // Method to get the first item
+    // Get first item
     @Override
     public T first() {
         if (head == null) {
@@ -71,7 +81,7 @@ public class HashDS<T> implements SequenceInterface<T> {
         return head.data;
     }
 
-    // Method to get the last item
+    // Get last item
     @Override
     public T last() {
         if (tail == null) {
@@ -80,13 +90,12 @@ public class HashDS<T> implements SequenceInterface<T> {
         return tail.data;
     }
 
-    // Method to delete the head item
+    // Delete head item
     @Override
     public T deleteHead() {
         if (head == null) {
             throw new EmptySequenceException("Cannot delete head: Sequence is empty.");
         }
-
         T data = head.data;
         head = head.next;
         if (head == null) {
@@ -96,13 +105,12 @@ public class HashDS<T> implements SequenceInterface<T> {
         return data;
     }
 
-    // Method to delete the tail item
+    // Delete tail item
     @Override
     public T deleteTail() {
         if (tail == null) {
             throw new EmptySequenceException("Cannot delete tail: Sequence is empty.");
         }
-
         T data = tail.data;
         if (head == tail) {
             head = null;
@@ -119,19 +127,19 @@ public class HashDS<T> implements SequenceInterface<T> {
         return data;
     }
 
-    // Method to check if the list is empty
+    // Check if list is empty
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
-    // Method to get the size of the list
+    // Get size of the list
     @Override
     public int size() {
         return size;
     }
 
-    // Method to clear the list
+    // Clear the list
     @Override
     public void clear() {
         head = null;
@@ -139,7 +147,50 @@ public class HashDS<T> implements SequenceInterface<T> {
         size = 0;
     }
 
-    // Method to convert the list to a string
+    // Get frequency of an item
+    @Override
+    public int getFrequencyOf(T item) {
+        int count = 0;
+        Node<T> current = head;
+        while (current != null) {
+            if (current.data.equals(item)) {
+                count++;
+            }
+            current = current.next;
+        }
+        return count;
+    }
+
+    // Remove item
+    @Override
+    public boolean remove(T item) {
+        if (head == null) {
+            return false;
+        }
+
+        // If the head is the item
+        if (head.data.equals(item)) {
+            deleteHead();
+            return true;
+        }
+
+        // Traverse to find the item
+        Node<T> current = head;
+        while (current.next != null) {
+            if (current.next.data.equals(item)) {
+                current.next = current.next.next;
+                if (current.next == null) { // Update tail if needed
+                    tail = current;
+                }
+                size--;
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+
+    // Convert list to string
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -149,50 +200,5 @@ public class HashDS<T> implements SequenceInterface<T> {
             current = current.next;
         }
         return result.toString().trim();
-    }
-
-    // Implement the getFrequencyOf method
-    public int getFrequencyOf(T item) {
-        int frequency = 0;
-        Node<T> current = head;
-        while (current != null) {
-            if (current.data.equals(item)) {
-                frequency++;
-            }
-            current = current.next;
-        }
-        return frequency;
-    }
-
-    // Implement the remove method
-    @Override
-    public void remove(T item) {
-        if (head == null) {
-            return;
-        }
-
-        // If the item to be removed is the head
-        if (head.data.equals(item)) {
-            head = head.next;
-            if (head == null) {
-                tail = null;
-            }
-            size--;
-            return;
-        }
-
-        // Traverse the list to find and remove the item
-        Node<T> current = head;
-        while (current.next != null && !current.next.data.equals(item)) {
-            current = current.next;
-        }
-
-        if (current.next != null) {
-            current.next = current.next.next;
-            if (current.next == null) {
-                tail = current;
-            }
-            size--;
-        }
     }
 }
