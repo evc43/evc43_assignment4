@@ -13,11 +13,26 @@ public class HashDS<T> implements SequenceInterface<T> {
         }
     }
 
-    // Constructor
+    // Default Constructor
     public HashDS() {
         this.head = null;
         this.tail = null;
         this.size = 0;
+    }
+
+    // Copy Constructor
+    public HashDS(HashDS<T> other) {
+        if (other == null || other.isEmpty()) {
+            this.head = null;
+            this.tail = null;
+            this.size = 0;
+        } else {
+            Node<T> current = other.head;
+            while (current != null) {
+                this.append(current.data);
+                current = current.next;
+            }
+        }
     }
 
     // Method to add an item to the end of the list
@@ -188,9 +203,9 @@ public class HashDS<T> implements SequenceInterface<T> {
         StringBuilder result = new StringBuilder();
         Node<T> current = head;
         while (current != null) {
-            result.append(current.data); // Concatenate without spaces
+            result.append(current.data);
             current = current.next;
         }
-        return result.toString(); // Return concatenated string
+        return result.toString();
     }
 }
